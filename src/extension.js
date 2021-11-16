@@ -2,7 +2,7 @@ const vscode = require('vscode');
 const {
   isUndefined,
   _isFirst,
-  _trimFirst,
+  _trimFirst, _trim,
   _insert,
 } = require('./parts/parts.js')
 
@@ -10,8 +10,7 @@ function activate(context) {
 
   const extensionMain = (commandName) => {
 
-    const editor = vscode.window.activeTextEditor;
-    if ( !editor ) {
+    if (!vscode.window.activeTextEditor) {
       vscode.window.showInformationMessage(`No editor is active`);
       return;
     }
@@ -25,7 +24,8 @@ function activate(context) {
       if (isUndefined(inputString)) {
         return;
       }
-      if (!vscode.window.activeTextEditor) {
+      const editor = vscode.window.activeTextEditor;
+      if (!editor) {
         vscode.window.showInformationMessage( `No editor is active` );
         return;
       }
@@ -34,7 +34,10 @@ function activate(context) {
         const editorSelectionsLoop = (func) => {
           editor.selections.forEach(select => {
             const range = new vscode.Range(
-              select.start.line, 0, select.end.line, select.end.character
+              select.start.line, 0,
+              select.end.line,
+              // select.end.character,
+              editor.document.lineAt(select.end.line).range.end.character
             );
             const text = editor.document.getText(range);
             func(range, text);
@@ -108,106 +111,192 @@ function activate(context) {
 
         switch (commandName) {
 
-          case `InsertBeginLineAllLines`:
-            editorSelectionsLoop((range, text) => {
-              text = textLoopAllLines(text, (lines, i) => {
-                lines[i] = inputString + lines[i];
-              })
-              ed.replace(range, text);
-            })
-            break;
+          case `InsertBeginLineAllLines`: {
+            editor.selections.forEach(select => {
+              for (let i = select.start.line; i <= select.end.line; i += 1) {
+                ed.insert(new vscode.Position(i, 0), inputString);
+              }
+            });
+          } break;
 
-          case `InsertBeginLineOnlyTextLines`:
-            editorSelectionsLoop((range, text) => {
-              text = textLoopOnlyTextLines(text, (lines, i) => {
-                lines[i] = inputString + lines[i];
-              })
-              ed.replace(range, text);
-            })
-            break;
+          case `InsertBeginLineOnlyTextLines`: {
+            editor.selections.forEach(select => {
+              for (let i = select.start.line; i <= select.end.line; i += 1) {
+                const line = editor.document.lineAt(i).text;
+                if (_trim(line) === '') { continue; }
+                ed.insert(new vscode.Position(i, 0), inputString);
+              }
+            });
+          } break;
 
-          case `InsertBeginLineOnlyMinIndent`:
-            editorSelectionsLoop((range, text) => {
-              text = textLoopOnlyMinIndent(text, (lines, i) => {
-                lines[i] = inputString + lines[i];
-              })
-              ed.replace(range, text);
-            })
-            break;
-
-          case `InsertBeginTextAllLines`:
-            editorSelectionsLoop((range, text) => {
-              text = textLoopAllLines(text, (lines, i) => {
-                lines[i] = _insert(
-                  lines[i], inputString,
-                  getIndent(lines[i]),
-                );
-              })
-              ed.replace(range, text);
-            })
-            break;
-
-          case `InsertBeginTextOnlyTextLines`:
-            editorSelectionsLoop((range, text) => {
-              text = textLoopOnlyTextLines(text, (lines, i) => {
-                lines[i] = _insert(
-                  lines[i], inputString,
-                  getIndent(lines[i]),
-                );
-              });
-              ed.replace(range, text);
-            })
-            break;
-
-          case `InsertBeginTextOnlyMinIndent`:
-            editorSelectionsLoopUnsupportTab((range, text) => {
-              text = textLoopOnlyMinIndent(text, (lines, i, indent) => {
-                lines[i] = _insert(
-                  lines[i], inputString,
-                  indent,
-                );
-              });
-              ed.replace(range, text);
-            })
-            break;
-
-          case `InsertMinIndentAllLines`:
-            editorSelectionsLoopUnsupportTab((range, text) => {
-              text = textLoopAllLines(text, (lines, i, minIndent) => {
-                if (lines[i].trim() === '') {
-                  lines[i] = ' '.repeat(minIndent) + inputString;
-                  return;
+          case `InsertBeginLineOnlyMinIndent`: {
+            let minIndent = Infinity;
+            editor.selections.forEach(select => {
+              for (let i = select.start.line; i <= select.end.line; i += 1) {
+                const line = editor.document.lineAt(i).text;
+                if (_trim(line) === '') { continue; }
+                const indent = getIndent(line);
+                if (indent < minIndent) {
+                  minIndent = indent
                 }
-                lines[i] = _insert(lines[i], inputString, minIndent)
-              }, getMinIndent);
-              ed.replace(range, text);
-            })
-            break;
+              }
+            });
+            if (minIndent === Infinity) { minIndent = 0; }
 
-          case `InsertMinIndentOnlyTextLines`:
-            editorSelectionsLoopUnsupportTab((range, text) => {
-              text = textLoopOnlyTextLines(text, (lines, i, minIndent) => {
-                lines[i] = _insert(lines[i], inputString, minIndent)
-              }, getMinIndent);
-              ed.replace(range, text);
-            })
-            break;
+            editor.selections.forEach(select => {
+              for (let i = select.start.line; i <= select.end.line; i += 1) {
+                const line = editor.document.lineAt(i).text;
+                if (_trim(line) === '') { continue; }
+                const indent = getIndent(line);
+                if (indent !== minIndent) { continue; }
+                ed.insert(new vscode.Position(i, 0), inputString);
+              }
+            });
 
-          case `DeleteBeginText`:
-            editorSelectionsLoop((range, text) => {
-              text = textLoopOnlyTextLines(text, (lines, i) => {
-                const trimLine = _trimFirst(lines[i], [' ', '\t']);
+          } break;
+
+          case `InsertBeginTextAllLines`: {
+            editor.selections.forEach(select => {
+              for (let i = select.start.line; i <= select.end.line; i += 1) {
+                const line = editor.document.lineAt(i).text;
+                ed.insert(new vscode.Position(i, getIndent(line)), inputString);
+              }
+            });
+          } break;
+
+          case `InsertBeginTextOnlyTextLines`: {
+            editor.selections.forEach(select => {
+              for (let i = select.start.line; i <= select.end.line; i += 1) {
+                const line = editor.document.lineAt(i).text;
+                if (_trim(line) === '') { continue; }
+                ed.insert(new vscode.Position(i, getIndent(line)), inputString);
+              }
+            });
+          } break;
+
+          case `InsertBeginTextOnlyMinIndent`: {
+
+            let minIndent = Infinity;
+            editor.selections.forEach(select => {
+              for (let i = select.start.line; i <= select.end.line; i += 1) {
+                const line = editor.document.lineAt(i).text;
+                if (_trim(line) === '') { continue; }
+                const indent = getIndent(line);
+                if (indent < minIndent) {
+                  minIndent = indent
+                }
+              }
+            });
+            if (minIndent === Infinity) { minIndent = 0; }
+
+            editor.selections.forEach(select => {
+              for (let i = select.start.line; i <= select.end.line; i += 1) {
+                const line = editor.document.lineAt(i).text;
+                if (_trim(line) === '') { continue; }
+                const indent = getIndent(line);
+                if (indent !== minIndent) { continue; }
+                ed.insert(new vscode.Position(i, getIndent(line)), inputString);
+              }
+            });
+
+          } break;
+
+          case `InsertMinIndentAllLines`: {
+
+            let minIndent = Infinity;
+            editor.selections.forEach(select => {
+              for (let i = select.start.line; i <= select.end.line; i += 1) {
+                const line = editor.document.lineAt(i).text;
+                if (_trim(line) === '') { continue; }
+                const indent = getIndent(line);
+                if (indent < minIndent) {
+                  minIndent = indent
+                }
+              }
+            });
+            if (minIndent === Infinity) { minIndent = 0; }
+
+            let includeTabFlag = false;
+            editor.selections.forEach(select => {
+              for (let i = select.start.line; i <= select.end.line; i += 1) {
+                const line = editor.document.lineAt(i).text;
+                if (line.includes(`\t`)) {
+                  includeTabFlag = true
+                }
+                if (_trim(line) === '') {
+                  ed.insert(
+                    new vscode.Position( i, 0),
+                    ' '.repeat(minIndent) + inputString,
+                  );
+                } else {
+                  ed.insert(new vscode.Position(i, minIndent), inputString);
+                }
+              }
+            });
+            if (includeTabFlag) {
+              vscode.window.showInformationMessage( 'This feature of Insert String Each Line Extension does not support tabs.');
+            }
+
+          } break;
+
+          case `InsertMinIndentOnlyTextLines`: {
+
+            let minIndent = Infinity;
+            editor.selections.forEach(select => {
+              for (let i = select.start.line; i <= select.end.line; i += 1) {
+                const line = editor.document.lineAt(i).text;
+                if (_trim(line) === '') { continue; }
+                const indent = getIndent(line);
+                if (indent < minIndent) {
+                  minIndent = indent
+                }
+              }
+            });
+            if (minIndent === Infinity) { minIndent = 0; }
+
+            let includeTabFlag = false;
+            editor.selections.forEach(select => {
+              for (let i = select.start.line; i <= select.end.line; i += 1) {
+                const line = editor.document.lineAt(i).text;
+                if (line.includes(`\t`)) {
+                  includeTabFlag = true
+                }
+                if (_trim(line) === '') {
+                  continue;
+                } else {
+                  ed.insert(new vscode.Position(i, minIndent), inputString);
+                }
+              }
+            });
+            if (includeTabFlag) {
+              vscode.window.showInformationMessage( 'This feature of Insert String Each Line Extension does not support tabs.');
+            }
+
+          } break;
+
+          case `DeleteBeginText`: {
+            editor.selections.forEach(select => {
+              for (let i = select.start.line; i <= select.end.line; i += 1) {
+                const line = editor.document.lineAt(i).text;
+
+                const trimLine = _trimFirst(line, [' ', '\t']);
                 const trimFirstInput = _trimFirst(inputString, [' ']);
+                const indent = line.length - trimLine.length;
                 if (_isFirst(trimLine, trimFirstInput)) {
-                  lines[i] = lines[i].replace(inputString, '');
+                  ed.delete(
+                    new vscode.Range(
+                      i, indent,
+                      i, indent + trimFirstInput.length
+                    )
+                  );
                 }
-              })
-              ed.replace(range, text);
-            })
-            break;
+              }
+            });
+          } break;
 
-          default:
+          default: {
             new Error(`BeginOfLine extensionMain`);
+          }
         }
       } );
     } );

@@ -2,7 +2,7 @@
   "name": "vscode-begin-of-line",
   "displayName": "Begin Of Line",
   "description": "insert a string on begin of line.",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "publisher": "SatoshiYamamoto",
   "author": {
     "name": "Satoshi Yamamoto",
@@ -42,39 +42,39 @@
     "commands": [
       {
         "command": "BeginOfLine.InsertBeginLineAllLines",
-        "title": "Begin Of Line : Insert : All Lines"
+        "title": "Begin Of Line | Insert | All Lines"
       },
       {
         "command": "BeginOfLine.InsertBeginLineOnlyTextLines",
-        "title": "Begin Of Line : Insert : Only Text Lines"
+        "title": "Begin Of Line | Insert | Only Text Lines"
       },
       {
         "command": "BeginOfLine.InsertBeginLineOnlyMinIndent",
-        "title": "Begin Of Line : Insert : Only Min Indent Text Lines"
+        "title": "Begin Of Line | Insert | Only Min Indent Text Lines"
       },
       {
         "command": "BeginOfLine.InsertBeginTextAllLines",
-        "title": "Begin Of Line : Insert : All Lines : Begin Of Text"
+        "title": "Begin Of Line | Insert | All Lines | Begin Of Text"
       },
       {
         "command": "BeginOfLine.InsertBeginTextOnlyTextLines",
-        "title": "Begin Of Line : Insert : Only Text Lines : Begin Of Text"
+        "title": "Begin Of Line | Insert | Only Text Lines | Begin Of Text"
       },
       {
         "command": "BeginOfLine.InsertBeginTextOnlyMinIndent",
-        "title": "Begin Of Line : Insert : Only Min Indent Text Lines : Begin Of Text"
+        "title": "Begin Of Line | Insert | Only Min Indent Text Lines | Begin Of Text"
       },
       {
         "command": "BeginOfLine.InsertMinIndentAllLines",
-        "title": "Begin Of Line : Insert : All Lines : Min Indent"
+        "title": "Begin Of Line | Insert | All Lines | Min Indent"
       },
       {
         "command": "BeginOfLine.InsertMinIndentOnlyTextLines",
-        "title": "Begin Of Line : Insert : Only Text Lines : Min Indent"
+        "title": "Begin Of Line | Insert | Only Text Lines | Min Indent"
       },
       {
         "command": "BeginOfLine.DeleteBeginText",
-        "title": "Begin Of Line : Delete : Begin Of Text"
+        "title": "Begin Of Line | Delete | Begin Of Text"
       }
     ],
     "configuration": {
