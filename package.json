@@ -2,7 +2,7 @@
   "name": "vscode-begin-of-line",
   "displayName": "Begin Of Line",
   "description": "insert a string on begin of line.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "publisher": "SatoshiYamamoto",
   "author": {
     "name": "Satoshi Yamamoto",
