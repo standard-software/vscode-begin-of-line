@@ -60,6 +60,11 @@ Released under the [MIT License][license].
 
 ## Version
 
+### 1.0.1
+2021/11/16(Tue)
+- update Readme
+- upload github vscode-begin-of-line-1.0.1.vsix
+
 ### 1.0.0
 2021/11/16(Tue)
 - Readme
