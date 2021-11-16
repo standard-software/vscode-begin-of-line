@@ -118,7 +118,8 @@ function activate(context) {
                 for (let { start, end } of editor.selections) {
                   for (let i = start.line; i <= end.line; i += 1) {
                     const line = editor.document.lineAt(i).text;
-                    editBuilder.insert(new vscode.Position(i, getIndent(line)), inputString);
+                    const indent = getIndent(line);
+                    editBuilder.insert(new vscode.Position(i, indent), inputString);
                   }
                 };
               } break;
@@ -128,7 +129,8 @@ function activate(context) {
                   for (let i = start.line; i <= end.line; i += 1) {
                     const line = editor.document.lineAt(i).text;
                     if (_trim(line) === '') { continue; }
-                    editBuilder.insert(new vscode.Position(i, getIndent(line)), inputString);
+                    const indent = getIndent(line);
+                    editBuilder.insert(new vscode.Position(i, indent), inputString);
                   }
                 };
               } break;
@@ -141,7 +143,7 @@ function activate(context) {
                     if (_trim(line) === '') { continue; }
                     const indent = getIndent(line);
                     if (indent !== minIndent) { continue; }
-                    editBuilder.insert(new vscode.Position(i, getIndent(line)), inputString);
+                    editBuilder.insert(new vscode.Position(i, indent), inputString);
                   }
                 };
               } break;
@@ -152,9 +154,7 @@ function activate(context) {
                 for (let { start, end } of editor.selections) {
                   for (let i = start.line; i <= end.line; i += 1) {
                     const line = editor.document.lineAt(i).text;
-                    if (line.includes(`\t`)) {
-                      includeTabFlag = true
-                    }
+                    if (line.includes(`\t`)) { includeTabFlag = true }
                     if (_trim(line) === '') {
                       editBuilder.insert(
                         new vscode.Position( i, 0),
@@ -166,7 +166,7 @@ function activate(context) {
                   }
                 };
                 if (includeTabFlag) {
-                  vscode.window.showInformationMessage( 'This feature of Insert String Each Line Extension does not support tabs.');
+                  vscode.window.showInformationMessage( 'This feature of Begin Of Line Extension does not support tabs.');
                 }
               } break;
 
@@ -176,9 +176,7 @@ function activate(context) {
                 for (let { start, end } of editor.selections) {
                   for (let i = start.line; i <= end.line; i += 1) {
                     const line = editor.document.lineAt(i).text;
-                    if (line.includes(`\t`)) {
-                      includeTabFlag = true
-                    }
+                    if (line.includes(`\t`)) { includeTabFlag = true }
                     if (_trim(line) === '') {
                       continue;
                     } else {
@@ -187,7 +185,7 @@ function activate(context) {
                   }
                 };
                 if (includeTabFlag) {
-                  vscode.window.showInformationMessage( 'This feature of Insert String Each Line Extension does not support tabs.');
+                  vscode.window.showInformationMessage( 'This feature of Begin Of Line Extension does not support tabs.');
                 }
               } break;
 
@@ -307,8 +305,9 @@ function activate(context) {
             for (let { start, end } of editor.selections) {
               for (let i = start.line; i <= end.line; i += 1) {
                 const line = editor.document.lineAt(i).text;
+                const indent = getIndent(line);
                 runAfterSelections.push(
-                  new vscode.Selection(i, getIndent(line), i, getIndent(line))
+                  new vscode.Selection(i, indent, i, indent)
                 )
               }
             };
@@ -321,8 +320,9 @@ function activate(context) {
               for (let i = start.line; i <= end.line; i += 1) {
                 const line = editor.document.lineAt(i).text;
                 if (_trim(line) === '') { continue; }
+                const indent = getIndent(line);
                 runAfterSelections.push(
-                  new vscode.Selection(i, getIndent(line), i, getIndent(line))
+                  new vscode.Selection(i, indent, i, indent)
                 )
               }
             };
@@ -339,7 +339,7 @@ function activate(context) {
                 const indent = getIndent(line);
                 if (indent !== minIndent) { continue; }
                 runAfterSelections.push(
-                  new vscode.Selection(i, getIndent(line), i, getIndent(line))
+                  new vscode.Selection(i, indent, i, indent)
                 )
               }
             };
@@ -369,7 +369,7 @@ function activate(context) {
             };
             editor.selections = runAfterSelections;
             if (includeTabFlag) {
-              vscode.window.showInformationMessage( 'This feature of Insert String Each Line Extension does not support tabs.');
+              vscode.window.showInformationMessage( 'This feature of Begin Of Line Extension does not support tabs.');
             }
           } break;
 
@@ -391,7 +391,7 @@ function activate(context) {
             };
             editor.selections = runAfterSelections;
             if (includeTabFlag) {
-              vscode.window.showInformationMessage( 'This feature of Insert String Each Line Extension does not support tabs.');
+              vscode.window.showInformationMessage( 'This feature of Begin Of Line Extension does not support tabs.');
             }
           } break;
 
