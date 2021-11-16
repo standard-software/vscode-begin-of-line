@@ -12,10 +12,6 @@ This extension has the following functions
 
 ## Install
 
-Search for "Begin Of Line" in the Marketplace  
-https://marketplace.visualstudio.com/vscode
-
-or here  
 https://marketplace.visualstudio.com/items?itemName=SatoshiYamamoto.vscode-begin-of-line
 
 ## Usage
@@ -85,10 +81,10 @@ Released under the [MIT License][license].
 - Major change in implementation method, from editBuilder.replace to editBuilder.insesrt.
 
 ### 0.1.1
-2021/11/16(Tue)
+2021/11/15(Mon)
 - refactoring
 
 ### 0.1.0
-2021/11/16(Tue)
+2021/11/15(Mon)
 - Created by migrating from vscode-insert-string-each-line
 
