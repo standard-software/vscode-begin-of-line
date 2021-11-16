@@ -33,10 +33,10 @@ function activate(context) {
       const inputCommands = {
         InsertBeginLineAllLines:      { label: `Insert | All Lines`, description: "" },
         InsertBeginLineOnlyTextLines: { label: `Insert | Only Text Lines`, description: `` },
-        InsertBeginLineOnlyMinIndent: { label: `Insert | Only Min Indent Text Lines`, description: `` },
+        InsertBeginLineOnlyMinIndent: { label: `Insert | Only Min Indent Lines`, description: `` },
         InsertBeginTextAllLines:      { label: `Insert | All Lines | Begin Of Text`, description: `` },
         InsertBeginTextOnlyTextLines: { label: `Insert | Only Text Lines | Begin Of Text`, description: `` },
-        InsertBeginTextOnlyMinIndent: { label: `Insert | Only Min Indent Text Lines | Begin Of Text`, description: `` },
+        InsertBeginTextOnlyMinIndent: { label: `Insert | Only Min Indent Lines | Begin Of Text`, description: `` },
         InsertMinIndentAllLines:      { label: `Insert | All Lines | Min Indent`, description: `` },
         InsertMinIndentOnlyTextLines: { label: `Insert | Only Text Lines | Min Indent`, description: `` },
         DeleteBeginText:              { label: `Delete | Begin Of Text`, description: `` },
@@ -225,10 +225,10 @@ function activate(context) {
       const selectEditCommands = {
         BeginLineAllLines:      { label: `Select Edit | All Lines`, description: "" },
         BeginLineOnlyTextLines: { label: `Select Edit | Only Text Lines`, description: `` },
-        BeginLineOnlyMinIndent: { label: `Select Edit | Only Min Indent Text Lines`, description: `` },
+        BeginLineOnlyMinIndent: { label: `Select Edit | Only Min Indent Lines`, description: `` },
         BeginTextAllLines:      { label: `Select Edit | All Lines | Begin Of Text`, description: `` },
         BeginTextOnlyTextLines: { label: `Select Edit | Only Text Lines | Begin Of Text`, description: `` },
-        BeginTextOnlyMinIndent: { label: `Select Edit | Only Min Indent Text Lines | Begin Of Text`, description: `` },
+        BeginTextOnlyMinIndent: { label: `Select Edit | Only Min Indent Lines | Begin Of Text`, description: `` },
         MinIndentAllLines:      { label: `Select Edit | All Lines | Min Indent`, description: `` },
         MinIndentOnlyTextLines: { label: `Select Edit | Only Text Lines | Min Indent`, description: `` },
       }
