@@ -2,7 +2,7 @@
   "name": "vscode-begin-of-line",
   "displayName": "Begin Of Line",
   "description": "insert a string on begin of line.",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "publisher": "SatoshiYamamoto",
   "author": {
     "name": "Satoshi Yamamoto",
@@ -27,19 +27,76 @@
     "template"
   ],
   "activationEvents": [
-    "onCommand:BeginOfLine.Input",
-    "onCommand:BeginOfLine.SelectEdit"
+    "onCommand:BeginOfLine.InsertBeginLineAllLines",
+    "onCommand:BeginOfLine.InsertBeginLineTextLines",
+    "onCommand:BeginOfLine.InsertBeginLineMinIndent",
+    "onCommand:BeginOfLine.InsertBeginTextAllLines",
+    "onCommand:BeginOfLine.InsertBeginTextTextLines",
+    "onCommand:BeginOfLine.InsertBeginTextMinIndent",
+    "onCommand:BeginOfLine.InsertMinIndentAllLines",
+    "onCommand:BeginOfLine.InsertMinIndentTextLines",
+    "onCommand:BeginOfLine.DeleteBeginText",
+
+    "onCommand:BeginOfLine.SelectBeginLineAllLines",
+    "onCommand:BeginOfLine.SelectBeginLineTextLines",
+    "onCommand:BeginOfLine.SelectBeginLineMinIndent",
+
+    "onCommand:BeginOfLine.SelectFunction"
   ],
   "main": "./src/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "BeginOfLine.Input",
-        "title": "Begin Of Line | Input"
+        "command": "BeginOfLine.InsertBeginLineAllLines",
+        "title": "Begin Of Line | Input | Insert Begin Of Line | All Lines"
       },
       {
-        "command": "BeginOfLine.SelectEdit",
-        "title": "Begin Of Line | Select Edit"
+        "command": "BeginOfLine.InsertBeginLineTextLines",
+        "title": "Begin Of Line | Input | Insert Begin Of Line | Text Lines"
+      },
+      {
+        "command": "BeginOfLine.InsertBeginLineMinIndent",
+        "title": "Begin Of Line | Input | Insert Begin Of Line | Min Indent Lines"
+      },
+      {
+        "command": "BeginOfLine.InsertBeginTextAllLines",
+        "title": "Begin Of Line | Input | Insert Begin Of Text | All Lines"
+      },
+      {
+        "command": "BeginOfLine.InsertBeginTextTextLines",
+        "title": "Begin Of Line | Input | Insert Begin Of Text | Text Lines"
+      },
+      {
+        "command": "BeginOfLine.InsertBeginTextMinIndent",
+        "title": "Begin Of Line | Input | Insert Begin Of Text | Min Indent Lines"
+      },
+      {
+        "command": "BeginOfLine.InsertMinIndentAllLines",
+        "title": "Begin Of Line | Input | Insert Min Indent | All Lines"
+      },
+      {
+        "command": "BeginOfLine.InsertMinIndentTextLines",
+        "title": "Begin Of Line | Input | Insert Min Indent | Text Lines"
+      },
+      {
+        "command": "BeginOfLine.DeleteBeginText",
+        "title": "Begin Of Line | Input | Delete Begin Of Text"
+      },
+      {
+        "command": "BeginOfLine.SelectBeginLineAllLines",
+        "title": "Begin Of Line | Select Cursor | All Lines"
+      },
+      {
+        "command": "BeginOfLine.SelectBeginLineTextLines",
+        "title": "Begin Of Line | Select Cursor | Text Lines"
+      },
+      {
+        "command": "BeginOfLine.SelectBeginLineMinIndent",
+        "title": "Begin Of Line | Select Cursor | Min Indent Lines"
+      },
+      {
+        "command": "BeginOfLine.SelectFunction",
+        "title": "Begin Of Line | Select Function"
       }
     ],
     "configuration": {
