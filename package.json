@@ -27,18 +27,24 @@
     "template"
   ],
   "activationEvents": [
-    "onCommand:BeginOfLine.InsertBeginLineAllLines",
-    "onCommand:BeginOfLine.InsertBeginLineTextLines",
+    "onCommand:BeginOfLine.Space2To4",
+    "onCommand:BeginOfLine.Space4To2",
+    "onCommand:BeginOfLine.Space4ToTab",
+    "onCommand:BeginOfLine.TabToSpace4",
+    "onCommand:BeginOfLine.TrimBegin",
+
+    "onCommand:BeginOfLine.InsertBeginLineAll",
+    "onCommand:BeginOfLine.InsertBeginLineText",
     "onCommand:BeginOfLine.InsertBeginLineMinIndent",
-    "onCommand:BeginOfLine.InsertBeginTextAllLines",
-    "onCommand:BeginOfLine.InsertBeginTextTextLines",
+    "onCommand:BeginOfLine.InsertBeginTextAll",
+    "onCommand:BeginOfLine.InsertBeginTextText",
     "onCommand:BeginOfLine.InsertBeginTextMinIndent",
-    "onCommand:BeginOfLine.InsertMinIndentAllLines",
-    "onCommand:BeginOfLine.InsertMinIndentTextLines",
+    "onCommand:BeginOfLine.InsertMinIndentAll",
+    "onCommand:BeginOfLine.InsertMinIndentText",
     "onCommand:BeginOfLine.DeleteBeginText",
 
-    "onCommand:BeginOfLine.SelectBeginLineAllLines",
-    "onCommand:BeginOfLine.SelectBeginLineTextLines",
+    "onCommand:BeginOfLine.SelectBeginLineAll",
+    "onCommand:BeginOfLine.SelectBeginLineText",
     "onCommand:BeginOfLine.SelectBeginLineMinIndent",
 
     "onCommand:BeginOfLine.SelectFunction"
@@ -47,11 +53,31 @@
   "contributes": {
     "commands": [
       {
-        "command": "BeginOfLine.InsertBeginLineAllLines",
+        "command": "BeginOfLine.Space2To4",
+        "title": "Begin Of Line | Space | Replace Indent Space 2 to 4"
+      },
+      {
+        "command": "BeginOfLine.Space4To2",
+        "title": "Begin Of Line | Space | Replace Indent Space 4 to 2"
+      },
+      {
+        "command": "BeginOfLine.Space4ToTab",
+        "title": "Begin Of Line | Space | Replace Indent Space 4 to Tab"
+      },
+      {
+        "command": "BeginOfLine.TabToSpace4",
+        "title": "Begin Of Line | Space | Replace Indent Tab to Space 4"
+      },
+      {
+        "command": "BeginOfLine.TrimBegin",
+        "title": "Begin Of Line | Space | Trim Begin (Delete Indent)"
+      },
+      {
+        "command": "BeginOfLine.InsertBeginLineAll",
         "title": "Begin Of Line | Input | Insert Begin Of Line | All Lines"
       },
       {
-        "command": "BeginOfLine.InsertBeginLineTextLines",
+        "command": "BeginOfLine.InsertBeginLineText",
         "title": "Begin Of Line | Input | Insert Begin Of Line | Text Lines"
       },
       {
@@ -59,11 +85,11 @@
         "title": "Begin Of Line | Input | Insert Begin Of Line | Min Indent Lines"
       },
       {
-        "command": "BeginOfLine.InsertBeginTextAllLines",
+        "command": "BeginOfLine.InsertBeginTextAll",
         "title": "Begin Of Line | Input | Insert Begin Of Text | All Lines"
       },
       {
-        "command": "BeginOfLine.InsertBeginTextTextLines",
+        "command": "BeginOfLine.InsertBeginTextText",
         "title": "Begin Of Line | Input | Insert Begin Of Text | Text Lines"
       },
       {
@@ -71,11 +97,11 @@
         "title": "Begin Of Line | Input | Insert Begin Of Text | Min Indent Lines"
       },
       {
-        "command": "BeginOfLine.InsertMinIndentAllLines",
+        "command": "BeginOfLine.InsertMinIndentAll",
         "title": "Begin Of Line | Input | Insert Min Indent | All Lines"
       },
       {
-        "command": "BeginOfLine.InsertMinIndentTextLines",
+        "command": "BeginOfLine.InsertMinIndentText",
         "title": "Begin Of Line | Input | Insert Min Indent | Text Lines"
       },
       {
@@ -83,11 +109,11 @@
         "title": "Begin Of Line | Input | Delete Begin Of Text"
       },
       {
-        "command": "BeginOfLine.SelectBeginLineAllLines",
+        "command": "BeginOfLine.SelectBeginLineAll",
         "title": "Begin Of Line | Select Cursor | All Lines"
       },
       {
-        "command": "BeginOfLine.SelectBeginLineTextLines",
+        "command": "BeginOfLine.SelectBeginLineText",
         "title": "Begin Of Line | Select Cursor | Text Lines"
       },
       {

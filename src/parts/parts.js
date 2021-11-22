@@ -16,6 +16,7 @@ const { _trimFirst } = require('./_trimFirst.js')
 const { _trimLast } = require('./_trimLast.js')
 const { _trim } = require('./_trim.js')
 const { _subLength } = require('./_subLength.js')
+const { _subIndex } = require('./_subIndex.js')
 const { _subFirst } = require('./_subFirst.js')
 const { _subLast } = require('./_subLast.js')
 const { _insert } = require('./_insert.js')
@@ -29,7 +30,7 @@ module.exports = {
   _deleteIndex, _deleteLength,
   _deleteFirst, _deleteLast,
   _trimFirst, _trimLast, _trim,
-  _subLength,
+  _subLength, _subIndex,
   _subFirst, _subLast,
   _insert,
 }

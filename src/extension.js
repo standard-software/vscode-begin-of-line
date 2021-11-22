@@ -3,6 +3,7 @@ const {
   isUndefined,
   _isFirst,
   _trimFirst, _trim,
+  _subIndex,
 } = require('./parts/parts.js')
 
 const getIndent = (line) => {
@@ -55,10 +56,12 @@ function activate(context) {
     });
 
     select1Space = () => {
-      let select2Space2To4, select2TrimBegin;
       const commands = [
-        [`Space 2 to 4`,  '', () => { select2Space2To4(); }],
-        [`Trim Begin`,    '', () => { select2TrimBegin(); }],
+        [`Space 2 to 4`,  '', () => { mainSpace(`Space2To4`); }],
+        [`Space 4 to 2`,  '', () => { mainSpace(`Space4To2`); }],
+        [`Space 4 to Tab`,'', () => { mainSpace(`Space4ToTab`); }],
+        [`Tab to Space 4`,'', () => { mainSpace(`TabToSpace4`); }],
+        [`Trim Begin`,    '', () => { mainSpace(`TrimBegin`); }],
       ].map(c => ({label:c[0], description:c[1], func:c[2]}));
       vscode.window.showQuickPick(
         commands.map(({label, description}) => ({label, description})),
@@ -71,13 +74,6 @@ function activate(context) {
         commands.find(({label}) => label === item.label).func();
       });
 
-      select2Space2To4 = () => {
-        console.log(`select2Space2To4`);
-      }
-
-      select2TrimBegin = () => {
-        console.log(`select2TrimBegin`);
-      }
     }
 
     select1Input = () => {
@@ -100,11 +96,10 @@ function activate(context) {
       });
 
       select2InsertBeginOfLine = () => {
-        let select3InsertBeginOfLineAll, select3InsertBeginOfLineText, select3InsertBeginOfLineMinIndent;
         const commands = [
-          [`All Lines`,         '', () => { select3InsertBeginOfLineAll() }],
-          [`Text Lines`,        '', () => { select3InsertBeginOfLineText() }],
-          [`Min Indent Lines`,  '', () => { select3InsertBeginOfLineMinIndent() }],
+          [`All Lines`,         '', () => { mainInput(`InsertBeginLineAll`) }],
+          [`Text Lines`,        '', () => { mainInput(`InsertBeginLineText`) }],
+          [`Min Indent Lines`,  '', () => { mainInput(`InsertBeginLineMinIndent`) }],
         ].map(c => ({label:c[0], description:c[1], func:c[2]}));
         vscode.window.showQuickPick(
           commands.map(({label, description}) => ({label, description})),
@@ -116,26 +111,13 @@ function activate(context) {
           if (!item) { return; }
           commands.find(({label}) => label === item.label).func();
         });
-
-        select3InsertBeginOfLineAll = () => {
-          mainInput(`InsertBeginLineAllLines`);
-        }
-
-        select3InsertBeginOfLineText = () => {
-          mainInput(`InsertBeginLineTextLines`);
-        }
-
-        select3InsertBeginOfLineMinIndent = () => {
-          mainInput(`InsertBeginLineMinIndent`);
-        }
       }
 
       select2InsertBeginOfText = () => {
-        let select3InsertBeginOfTextAll, select3InsertBeginOfTextText, select3InsertBeginOfTextMinIndent;
         const commands = [
-          [`All Lines`,         '', () => { select3InsertBeginOfTextAll(); }],
-          [`Text Lines`,        '', () => { select3InsertBeginOfTextText(); }],
-          [`Min Indent Lines`,  '', () => { select3InsertBeginOfTextMinIndent(); }],
+          [`All Lines`,         '', () => { mainInput(`InsertBeginTextAll`); }],
+          [`Text Lines`,        '', () => { mainInput(`InsertBeginTextText`); }],
+          [`Min Indent Lines`,  '', () => { mainInput(`InsertBeginTextMinIndent`); }],
         ].map(c => ({label:c[0], description:c[1], func:c[2]}));
         vscode.window.showQuickPick(
           commands.map(({label, description}) => ({label, description})),
@@ -147,25 +129,12 @@ function activate(context) {
           if (!item) { return; }
           commands.find(({label}) => label === item.label).func();
         });
-
-        select3InsertBeginOfTextAll = () => {
-          mainInput(`InsertBeginTextAllLines`);
-        }
-
-        select3InsertBeginOfTextText = () => {
-          mainInput(`InsertBeginTextTextLines`);
-        }
-
-        select3InsertBeginOfTextMinIndent = () => {
-          mainInput(`InsertBeginTextMinIndent`);
-        }
       }
 
       select2InsertMinIndent = () => {
-        let select3InsertMinIndentAll, select3InsertMinIndentText;
         const commands = [
-          [`All Lines`,   '', () => { select3InsertMinIndentAll(); }],
-          [`Text Lines`,  '', () => { select3InsertMinIndentText(); }],
+          [`All Lines`,   '', () => { mainInput(`InsertMinIndentAll`); }],
+          [`Text Lines`,  '', () => { mainInput(`InsertMinIndentText`); }],
         ].map(c => ({label:c[0], description:c[1], func:c[2]}));
         vscode.window.showQuickPick(
           commands.map(({label, description}) => ({label, description})),
@@ -177,14 +146,6 @@ function activate(context) {
           if (!item) { return; }
           commands.find(({label}) => label === item.label).func();
         });
-
-        select3InsertMinIndentAll = () => {
-          mainInput(`InsertMinIndentAllLines`);
-        }
-
-        select3InsertMinIndentText = () => {
-          mainInput(`InsertMinIndentTextLines`);
-        }
       }
 
       select2DeleteBeginOfText = () => {
@@ -193,11 +154,10 @@ function activate(context) {
     }
 
     select1Select = () => {
-      let select2SelectAll, select2SelectText, select2SelectMinIndent;
       const commands = [
-        [`All Lines`,         '', () => { select2SelectAll(); }],
-        [`Text Lines`,        '', () => { select2SelectText(); }],
-        [`Min Indent Lines`,  '', () => { select2SelectMinIndent(); }],
+        [`All Lines`,         '', () => { mainSelect(`SelectBeginLineAll`); }],
+        [`Text Lines`,        '', () => { mainSelect(`SelectBeginLineText`); }],
+        [`Min Indent Lines`,  '', () => { mainSelect(`SelectBeginLineMinIndent`); }],
       ].map(c => ({label:c[0], description:c[1], func:c[2]}));
       vscode.window.showQuickPick(
         commands.map(({label, description}) => ({label, description})),
@@ -209,397 +169,91 @@ function activate(context) {
         if (!item) { return; }
         commands.find(({label}) => label === item.label).func();
       });
-
-      select2SelectAll = () => {
-        console.log(`select2SelectAll`);
-      }
-
-      select2SelectText = () => {
-        console.log(`select2SelectText`);
-      }
-
-      select2SelectMinIndent = () => {
-        console.log(`select2SelectMinIndent`);
-      }
     }
 
   });
 
-  // context.subscriptions.push(vscode.commands.registerCommand(
-  //   `BeginOfLine.Input`, () => {
+  const mainSpace = (commandName) => {
+    const editor = vscode.window.activeTextEditor;
+    if (!editor) {
+      vscode.window.showInformationMessage(`No editor is active`);
+      return;
+    }
+    editor.edit(editBuilder => {
+      switch (commandName) {
 
-  //     const inputCommands = {
-  //       InsertBeginLineAllLines:      { label: `Insert | All Lines`, description: "" },
-  //       InsertBeginLineOnlyTextLines: { label: `Insert | Only Text Lines`, description: `` },
-  //       InsertBeginLineOnlyMinIndent: { label: `Insert | Only Min Indent Lines`, description: `` },
-  //       InsertBeginTextAllLines:      { label: `Insert | All Lines | Begin Of Text`, description: `` },
-  //       InsertBeginTextOnlyTextLines: { label: `Insert | Only Text Lines | Begin Of Text`, description: `` },
-  //       InsertBeginTextOnlyMinIndent: { label: `Insert | Only Min Indent Lines | Begin Of Text`, description: `` },
-  //       InsertMinIndentAllLines:      { label: `Insert | All Lines | Min Indent`, description: `` },
-  //       InsertMinIndentOnlyTextLines: { label: `Insert | Only Text Lines | Min Indent`, description: `` },
-  //       DeleteBeginText:              { label: `Delete | Begin Of Text`, description: `` },
-  //     }
+        case `Space2To4`: {
+          for (let { start, end } of editor.selections) {
+            for (let i = start.line; i <= end.line; i += 1) {
+              const line = editor.document.lineAt(i).text;
+              const trimLine = _trimFirst(line, [' ', '\t']);
+              const indent = _subIndex(line, 0, line.length - trimLine.length - 1)
+              const range = new vscode.Range(
+                i, 0, i, line.length - trimLine.length,
+              );
+              editBuilder.replace(range, indent.replaceAll('  ', '    '));
+            }
+          };
+        } break;
 
-  //     vscode.window.showQuickPick(Object.values(inputCommands), {
-  //       canPickMany: false,
-  //       placeHolder: "Select Command | Begin Of Line | Input",
-  //     }).then((item) => {
-  //       if (!item) { return; }
+        case `Space4To2`: {
+          for (let { start, end } of editor.selections) {
+            for (let i = start.line; i <= end.line; i += 1) {
+              const line = editor.document.lineAt(i).text;
+              const trimLine = _trimFirst(line, [' ', '\t']);
+              const indent = _subIndex(line, 0, line.length - trimLine.length - 1)
+              const range = new vscode.Range(
+                i, 0, i, line.length - trimLine.length,
+              );
+              editBuilder.replace(range, indent.replaceAll('    ', '  '));
+            }
+          };
+        } break;
 
-  //       let _commandName = '';
-  //       for (let [key, value] of Object.entries(inputCommands)) {
-  //         if (item === value) {
-  //           _commandName = key;
-  //           break;
-  //         }
-  //       }
-  //       if (_commandName === '') { return; }
-  //       const commandName = _commandName;
+        case `Space4ToTab`: {
+          for (let { start, end } of editor.selections) {
+            for (let i = start.line; i <= end.line; i += 1) {
+              const line = editor.document.lineAt(i).text;
+              const trimLine = _trimFirst(line, [' ', '\t']);
+              const indent = _subIndex(line, 0, line.length - trimLine.length - 1)
+              const range = new vscode.Range(
+                i, 0, i, line.length - trimLine.length,
+              );
+              editBuilder.replace(range, indent.replaceAll('    ', '\t'));
+            }
+          };
+        } break;
 
-  //       const editor = vscode.window.activeTextEditor;
-  //       if (!editor) {
-  //         vscode.window.showInformationMessage(`No editor is active`);
-  //         return;
-  //       }
+        case `TabToSpace4`: {
+          for (let { start, end } of editor.selections) {
+            for (let i = start.line; i <= end.line; i += 1) {
+              const line = editor.document.lineAt(i).text;
+              const trimLine = _trimFirst(line, [' ', '\t']);
+              const indent = _subIndex(line, 0, line.length - trimLine.length - 1)
+              const range = new vscode.Range(
+                i, 0, i, line.length - trimLine.length,
+              );
+              editBuilder.replace(range, indent.replaceAll('\t', '    '));
+            }
+          };
+        } break;
 
-  //       vscode.window.showInputBox({
-  //         ignoreFocusOut: true,
-  //         placeHolder: ``,
-  //         prompt: `Input String`,
-  //         value: vscode.workspace.getConfiguration(`BeginOfLine`).get(`insertString`),
-  //       }).then(inputString => {
-  //         if (isUndefined(inputString)) {
-  //           return;
-  //         }
-  //         const editor = vscode.window.activeTextEditor;
-  //         if (!editor) {
-  //           vscode.window.showInformationMessage( `No editor is active` );
-  //           return;
-  //         }
-  //         editor.edit(editBuilder => {
+        case `TrimBegin`: {
+          for (let { start, end } of editor.selections) {
+            for (let i = start.line; i <= end.line; i += 1) {
+              const line = editor.document.lineAt(i).text;
+              const trimLine = _trimFirst(line, [' ', '\t']);
+              const range = new vscode.Range(
+                i, 0, i, line.length,
+              );
+              editBuilder.replace(range, trimLine);
+            }
+          };
+        } break;
 
-  //           switch (commandName) {
-
-  //           case `InsertBeginLineAllLines`: {
-  //             for (let { start, end } of editor.selections) {
-  //               for (let i = start.line; i <= end.line; i += 1) {
-  //                 editBuilder.insert(new vscode.Position(i, 0), inputString);
-  //               }
-  //             };
-  //           } break;
-
-  //           case `InsertBeginLineOnlyTextLines`: {
-  //             for (let { start, end } of editor.selections) {
-  //               for (let i = start.line; i <= end.line; i += 1) {
-  //                 const line = editor.document.lineAt(i).text;
-  //                 if (_trim(line) === '') { continue; }
-  //                 editBuilder.insert(new vscode.Position(i, 0), inputString);
-  //               }
-  //             };
-  //           } break;
-
-  //           case `InsertBeginLineOnlyMinIndent`: {
-  //             const minIndent = getMinIndent(editor)
-  //             for (let { start, end } of editor.selections) {
-  //               for (let i = start.line; i <= end.line; i += 1) {
-  //                 const line = editor.document.lineAt(i).text;
-  //                 if (_trim(line) === '') { continue; }
-  //                 const indent = getIndent(line);
-  //                 if (indent !== minIndent) { continue; }
-  //                 editBuilder.insert(new vscode.Position(i, 0), inputString);
-  //               }
-  //             };
-  //           } break;
-
-  //           case `InsertBeginTextAllLines`: {
-  //             for (let { start, end } of editor.selections) {
-  //               for (let i = start.line; i <= end.line; i += 1) {
-  //                 const line = editor.document.lineAt(i).text;
-  //                 const indent = getIndent(line);
-  //                 editBuilder.insert(new vscode.Position(i, indent), inputString);
-  //               }
-  //             };
-  //           } break;
-
-  //           case `InsertBeginTextOnlyTextLines`: {
-  //             for (let { start, end } of editor.selections) {
-  //               for (let i = start.line; i <= end.line; i += 1) {
-  //                 const line = editor.document.lineAt(i).text;
-  //                 if (_trim(line) === '') { continue; }
-  //                 const indent = getIndent(line);
-  //                 editBuilder.insert(new vscode.Position(i, indent), inputString);
-  //               }
-  //             };
-  //           } break;
-
-  //           case `InsertBeginTextOnlyMinIndent`: {
-  //             const minIndent = getMinIndent(editor)
-  //             for (let { start, end } of editor.selections) {
-  //               for (let i = start.line; i <= end.line; i += 1) {
-  //                 const line = editor.document.lineAt(i).text;
-  //                 if (_trim(line) === '') { continue; }
-  //                 const indent = getIndent(line);
-  //                 if (indent !== minIndent) { continue; }
-  //                 editBuilder.insert(new vscode.Position(i, indent), inputString);
-  //               }
-  //             };
-  //           } break;
-
-  //           case `InsertMinIndentAllLines`: {
-  //             const minIndent = getMinIndent(editor)
-  //             let includeTabFlag = false;
-  //             for (let { start, end } of editor.selections) {
-  //               for (let i = start.line; i <= end.line; i += 1) {
-  //                 const line = editor.document.lineAt(i).text;
-  //                 if (line.includes(`\t`)) { includeTabFlag = true }
-  //                 if (_trim(line) === '') {
-  //                   editBuilder.insert(
-  //                     new vscode.Position( i, 0),
-  //                     ' '.repeat(minIndent) + inputString,
-  //                   );
-  //                 } else {
-  //                   editBuilder.insert(new vscode.Position(i, minIndent), inputString);
-  //                 }
-  //               }
-  //             };
-  //             if (includeTabFlag) {
-  //               vscode.window.showInformationMessage( 'This feature of Begin Of Line Extension does not support tabs.');
-  //             }
-  //           } break;
-
-  //           case `InsertMinIndentOnlyTextLines`: {
-  //             const minIndent = getMinIndent(editor)
-  //             let includeTabFlag = false;
-  //             for (let { start, end } of editor.selections) {
-  //               for (let i = start.line; i <= end.line; i += 1) {
-  //                 const line = editor.document.lineAt(i).text;
-  //                 if (line.includes(`\t`)) { includeTabFlag = true }
-  //                 if (_trim(line) === '') {
-  //                   continue;
-  //                 } else {
-  //                   editBuilder.insert(new vscode.Position(i, minIndent), inputString);
-  //                 }
-  //               }
-  //             };
-  //             if (includeTabFlag) {
-  //               vscode.window.showInformationMessage( 'This feature of Begin Of Line Extension does not support tabs.');
-  //             }
-  //           } break;
-
-  //           case `DeleteBeginText`: {
-  //             for (let { start, end } of editor.selections) {
-  //               for (let i = start.line; i <= end.line; i += 1) {
-  //                 const line = editor.document.lineAt(i).text;
-  //                 const trimLine = _trimFirst(line, [' ', '\t']);
-  //                 const trimFirstInput = _trimFirst(inputString, [' ']);
-  //                 const indent = line.length - trimLine.length;
-  //                 if (_isFirst(trimLine, trimFirstInput)) {
-  //                   editBuilder.delete(
-  //                     new vscode.Range(
-  //                       i, indent,
-  //                       i, indent + trimFirstInput.length
-  //                     )
-  //                   );
-  //                 }
-  //               }
-  //             };
-  //           } break;
-
-  //           default: {
-  //             throw new Error(`BeginOfLine Input`);
-  //           }
-  //           }
-  //         });
-  //       });
-
-  //     });
-  //   })
-  // );
-
-  // context.subscriptions.push(
-
-  //   vscode.commands.registerCommand(`BeginOfLine.SelectEdit`, () => {
-  //     const selectEditCommands = {
-  //       BeginLineAllLines:      { label: `Select Edit | All Lines`, description: "" },
-  //       BeginLineOnlyTextLines: { label: `Select Edit | Only Text Lines`, description: `` },
-  //       BeginLineOnlyMinIndent: { label: `Select Edit | Only Min Indent Lines`, description: `` },
-  //       BeginTextAllLines:      { label: `Select Edit | All Lines | Begin Of Text`, description: `` },
-  //       BeginTextOnlyTextLines: { label: `Select Edit | Only Text Lines | Begin Of Text`, description: `` },
-  //       BeginTextOnlyMinIndent: { label: `Select Edit | Only Min Indent Lines | Begin Of Text`, description: `` },
-  //       MinIndentAllLines:      { label: `Select Edit | All Lines | Min Indent`, description: `` },
-  //       MinIndentOnlyTextLines: { label: `Select Edit | Only Text Lines | Min Indent`, description: `` },
-  //     }
-
-  //     vscode.window.showQuickPick(Object.values(selectEditCommands), {
-  //       canPickMany: false,
-  //       placeHolder: "Select Command | Begin Of Line | Select Edit",
-  //     }).then((item) => {
-  //       if (!item) { return; }
-
-  //       let _commandName = '';
-  //       for (let [key, value] of Object.entries(selectEditCommands)) {
-  //         if (item === value) {
-  //           _commandName = key;
-  //           break;
-  //         }
-  //       }
-  //       if (_commandName === '') { return; }
-  //       const commandName = _commandName;
-
-  //       const editor = vscode.window.activeTextEditor;
-  //       if (!editor) {
-  //         vscode.window.showInformationMessage(`No editor is active`);
-  //         return;
-  //       }
-  //       editor.edit(editBuilder => {
-  //         switch (commandName) {
-
-  //         case `BeginLineAllLines`: {
-  //           const runAfterSelections = [];
-  //           for (let { start, end } of editor.selections) {
-  //             for (let i = start.line; i <= end.line; i += 1) {
-  //               runAfterSelections.push(
-  //                 new vscode.Selection(i, 0, i, 0)
-  //               )
-  //             }
-  //           };
-  //           editor.selections = runAfterSelections;
-  //         } break;
-
-  //         case `BeginLineOnlyTextLines`: {
-  //           const runAfterSelections = [];
-  //           for (let { start, end } of editor.selections) {
-  //             for (let i = start.line; i <= end.line; i += 1) {
-  //               const line = editor.document.lineAt(i).text;
-  //               if (_trim(line) === '') { continue; }
-  //               runAfterSelections.push(
-  //                 new vscode.Selection(i, 0, i, 0)
-  //               )
-  //             }
-  //           };
-  //           editor.selections = runAfterSelections;
-  //         } break;
-
-  //         case `BeginLineOnlyMinIndent`: {
-  //           const runAfterSelections = [];
-  //           const minIndent = getMinIndent(editor)
-  //           for (let { start, end } of editor.selections) {
-  //             for (let i = start.line; i <= end.line; i += 1) {
-  //               const line = editor.document.lineAt(i).text;
-  //               if (_trim(line) === '') { continue; }
-  //               const indent = getIndent(line);
-  //               if (indent !== minIndent) { continue; }
-  //               runAfterSelections.push(
-  //                 new vscode.Selection(i, 0, i, 0)
-  //               )
-  //             }
-  //           };
-  //           editor.selections = runAfterSelections;
-  //         } break;
-
-  //         case `BeginTextAllLines`: {
-  //           const runAfterSelections = [];
-  //           for (let { start, end } of editor.selections) {
-  //             for (let i = start.line; i <= end.line; i += 1) {
-  //               const line = editor.document.lineAt(i).text;
-  //               const indent = getIndent(line);
-  //               runAfterSelections.push(
-  //                 new vscode.Selection(i, indent, i, indent)
-  //               )
-  //             }
-  //           };
-  //           editor.selections = runAfterSelections;
-  //         } break;
-
-  //         case `BeginTextOnlyTextLines`: {
-  //           const runAfterSelections = [];
-  //           for (let { start, end } of editor.selections) {
-  //             for (let i = start.line; i <= end.line; i += 1) {
-  //               const line = editor.document.lineAt(i).text;
-  //               if (_trim(line) === '') { continue; }
-  //               const indent = getIndent(line);
-  //               runAfterSelections.push(
-  //                 new vscode.Selection(i, indent, i, indent)
-  //               )
-  //             }
-  //           };
-  //           editor.selections = runAfterSelections;
-  //         } break;
-
-  //         case `BeginTextOnlyMinIndent`: {
-  //           const runAfterSelections = [];
-  //           const minIndent = getMinIndent(editor)
-  //           for (let { start, end } of editor.selections) {
-  //             for (let i = start.line; i <= end.line; i += 1) {
-  //               const line = editor.document.lineAt(i).text;
-  //               if (_trim(line) === '') { continue; }
-  //               const indent = getIndent(line);
-  //               if (indent !== minIndent) { continue; }
-  //               runAfterSelections.push(
-  //                 new vscode.Selection(i, indent, i, indent)
-  //               )
-  //             }
-  //           };
-  //           editor.selections = runAfterSelections;
-  //         } break;
-
-  //         case `MinIndentAllLines`: {
-  //           const runAfterSelections = [];
-  //           const minIndent = getMinIndent(editor)
-  //           let includeTabFlag = false;
-  //           for (let { start, end } of editor.selections) {
-  //             for (let i = start.line; i <= end.line; i += 1) {
-  //               const line = editor.document.lineAt(i).text;
-  //               if (line.includes(`\t`)) {
-  //                 includeTabFlag = true
-  //               }
-  //               if (_trim(line) === '') {
-  //                 editBuilder.insert(
-  //                   new vscode.Position( i, 0),
-  //                   ' '.repeat(minIndent),
-  //                 );
-  //               }
-  //               runAfterSelections.push(
-  //                 new vscode.Selection(i, minIndent, i, minIndent)
-  //               )
-  //             }
-  //           };
-  //           editor.selections = runAfterSelections;
-  //           if (includeTabFlag) {
-  //             vscode.window.showInformationMessage( 'This feature of Begin Of Line Extension does not support tabs.');
-  //           }
-  //         } break;
-
-  //         case `MinIndentOnlyTextLines`: {
-  //           const runAfterSelections = [];
-  //           const minIndent = getMinIndent(editor)
-  //           let includeTabFlag = false;
-  //           for (let { start, end } of editor.selections) {
-  //             for (let i = start.line; i <= end.line; i += 1) {
-  //               const line = editor.document.lineAt(i).text;
-  //               if (line.includes(`\t`)) {
-  //                 includeTabFlag = true
-  //               }
-  //               if (_trim(line) === '') { continue; }
-  //               runAfterSelections.push(
-  //                 new vscode.Selection(i, minIndent, i, minIndent)
-  //               )
-  //             }
-  //           };
-  //           editor.selections = runAfterSelections;
-  //           if (includeTabFlag) {
-  //             vscode.window.showInformationMessage( 'This feature of Begin Of Line Extension does not support tabs.');
-  //           }
-  //         } break;
-
-  //         default: {
-  //           throw new Error(`BeginOfLine Select Edit`);
-  //         }
-  //         }
-  //       });
-  //     });
-  //   })
-  // );
+      }
+    });
+  };
 
   const mainInput = (commandName) => {
     const editor = vscode.window.activeTextEditor;
@@ -625,7 +279,7 @@ function activate(context) {
 
         switch (commandName) {
 
-          case `InsertBeginLineAllLines`: {
+          case `InsertBeginLineAll`: {
             for (let { start, end } of editor.selections) {
               for (let i = start.line; i <= end.line; i += 1) {
                 editBuilder.insert(new vscode.Position(i, 0), inputString);
@@ -633,7 +287,7 @@ function activate(context) {
             };
           } break;
 
-          case `InsertBeginLineOnlyTextLines`: {
+          case `InsertBeginLineText`: {
             for (let { start, end } of editor.selections) {
               for (let i = start.line; i <= end.line; i += 1) {
                 const line = editor.document.lineAt(i).text;
@@ -643,7 +297,7 @@ function activate(context) {
             };
           } break;
 
-          case `InsertBeginLineOnlyMinIndent`: {
+          case `InsertBeginLineMinIndent`: {
             const minIndent = getMinIndent(editor)
             for (let { start, end } of editor.selections) {
               for (let i = start.line; i <= end.line; i += 1) {
@@ -656,7 +310,7 @@ function activate(context) {
             };
           } break;
 
-          case `InsertBeginTextAllLines`: {
+          case `InsertBeginTextAll`: {
             for (let { start, end } of editor.selections) {
               for (let i = start.line; i <= end.line; i += 1) {
                 const line = editor.document.lineAt(i).text;
@@ -666,7 +320,7 @@ function activate(context) {
             };
           } break;
 
-          case `InsertBeginTextOnlyTextLines`: {
+          case `InsertBeginTextText`: {
             for (let { start, end } of editor.selections) {
               for (let i = start.line; i <= end.line; i += 1) {
                 const line = editor.document.lineAt(i).text;
@@ -677,7 +331,7 @@ function activate(context) {
             };
           } break;
 
-          case `InsertBeginTextOnlyMinIndent`: {
+          case `InsertBeginTextMinIndent`: {
             const minIndent = getMinIndent(editor)
             for (let { start, end } of editor.selections) {
               for (let i = start.line; i <= end.line; i += 1) {
@@ -690,7 +344,7 @@ function activate(context) {
             };
           } break;
 
-          case `InsertMinIndentAllLines`: {
+          case `InsertMinIndentAll`: {
             const minIndent = getMinIndent(editor)
             let includeTabFlag = false;
             for (let { start, end } of editor.selections) {
@@ -712,7 +366,7 @@ function activate(context) {
             }
           } break;
 
-          case `InsertMinIndentOnlyTextLines`: {
+          case `InsertMinIndentText`: {
             const minIndent = getMinIndent(editor)
             let includeTabFlag = false;
             for (let { start, end } of editor.selections) {
@@ -769,7 +423,7 @@ function activate(context) {
     editor.edit(editBuilder => {
       switch (commandName) {
 
-        case `SelectBeginLineAllLines`: {
+        case `SelectBeginLineAll`: {
           const runAfterSelections = [];
           for (let { start, end } of editor.selections) {
             for (let i = start.line; i <= end.line; i += 1) {
@@ -781,7 +435,7 @@ function activate(context) {
           editor.selections = runAfterSelections;
         } break;
 
-        case `SelectBeginLineOnlyTextLines`: {
+        case `SelectBeginLineText`: {
           const runAfterSelections = [];
           for (let { start, end } of editor.selections) {
             for (let i = start.line; i <= end.line; i += 1) {
@@ -795,7 +449,7 @@ function activate(context) {
           editor.selections = runAfterSelections;
         } break;
 
-        case `SelectBeginLineOnlyMinIndent`: {
+        case `SelectBeginLineMinIndent`: {
           const runAfterSelections = [];
           const minIndent = getMinIndent(editor)
           for (let { start, end } of editor.selections) {
@@ -819,48 +473,68 @@ function activate(context) {
     });
   };
 
-  registerCommand(`BeginOfLine.InsertBeginLineAllLines`, () => {
-    mainInput(`InsertBeginLineAllLines`);
+  registerCommand(`BeginOfLine.Space2To4`, () => {
+    mainSpace(`Space2To4`);
   });
 
-  registerCommand(`BeginOfLine.InsertBeginLineTextLines`, () => {
-    mainInput(`InsertBeginLineTextLines`);
+  registerCommand(`BeginOfLine.Space4To2`, () => {
+    mainSpace(`Space4To2`);
+  });
+
+  registerCommand(`BeginOfLine.Space4ToTab`, () => {
+    mainSpace(`Space4ToTab`);
+  });
+
+  registerCommand(`BeginOfLine.TabToSpace4`, () => {
+    mainSpace(`TabToSpace4`);
+  });
+
+  registerCommand(`BeginOfLine.TrimBegin`, () => {
+    mainSpace(`TrimBegin`);
+  });
+
+  registerCommand(`BeginOfLine.InsertBeginLineAll`, () => {
+    mainInput(`InsertBeginLineAll`);
+  });
+
+  registerCommand(`BeginOfLine.InsertBeginLineText`, () => {
+    mainInput(`InsertBeginLineText`);
   });
 
   registerCommand(`BeginOfLine.InsertBeginLineMinIndent`, () => {
     mainInput(`InsertBeginLineMinIndent`);
   });
 
-  registerCommand(`BeginOfLine.InsertBeginTextAllLines`, () => {
-    mainInput(`InsertBeginTextAllLines`);
+  registerCommand(`BeginOfLine.InsertBeginTextAll`, () => {
+    mainInput(`InsertBeginTextAll`);
   });
 
-  registerCommand(`BeginOfLine.InsertBeginTextTextLines`, () => {
-    mainInput(`InsertBeginTextTextLines`);
+  registerCommand(`BeginOfLine.InsertBeginTextText`, () => {
+    mainInput(`InsertBeginTextText`);
   });
 
   registerCommand(`BeginOfLine.InsertBeginTextMinIndent`, () => {
     mainInput(`InsertBeginTextMinIndent`);
   });
 
-  registerCommand(`BeginOfLine.InsertMinIndentAllLines`, () => {
-    mainInput(`InsertMinIndentAllLines`);
+  registerCommand(`BeginOfLine.InsertMinIndentAll`, () => {
+    mainInput(`InsertMinIndentAll`);
   });
 
-  registerCommand(`BeginOfLine.InsertMinIndentTextLines`, () => {
-    mainInput(`InsertMinIndentTextLines`);
+  registerCommand(`BeginOfLine.InsertMinIndentText`, () => {
+    mainInput(`InsertMinIndentText`);
   });
 
   registerCommand(`BeginOfLine.DeleteBeginText`, () => {
     mainInput(`DeleteBeginText`);
   });
 
-  registerCommand(`BeginOfLine.SelectBeginLineAllLines`, () => {
-    mainSelect(`SelectBeginLineAllLines`);
+  registerCommand(`BeginOfLine.SelectBeginLineAll`, () => {
+    mainSelect(`SelectBeginLineAll`);
   });
 
-  registerCommand(`BeginOfLine.SelectBeginLineTextLines`, () => {
-    mainSelect(`SelectBeginLineTextLines`);
+  registerCommand(`BeginOfLine.SelectBeginLineText`, () => {
+    mainSelect(`SelectBeginLineText`);
   });
 
   registerCommand(`BeginOfLine.SelectBeginLineMinIndent`, () => {
