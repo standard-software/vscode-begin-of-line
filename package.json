@@ -1,8 +1,8 @@
 {
   "name": "vscode-begin-of-line",
   "displayName": "Begin Of Line",
-  "description": "insert a string on begin of line.",
-  "version": "2.0.0",
+  "description": "Extension to insert, select, and convert at the beginning of a line.",
+  "version": "2.1.0",
   "publisher": "SatoshiYamamoto",
   "author": {
     "name": "Satoshi Yamamoto",
@@ -27,12 +27,6 @@
     "template"
   ],
   "activationEvents": [
-    "onCommand:BeginOfLine.Space2To4",
-    "onCommand:BeginOfLine.Space4To2",
-    "onCommand:BeginOfLine.Space4ToTab",
-    "onCommand:BeginOfLine.TabToSpace4",
-    "onCommand:BeginOfLine.TrimBegin",
-
     "onCommand:BeginOfLine.InsertBeginLineAll",
     "onCommand:BeginOfLine.InsertBeginLineText",
     "onCommand:BeginOfLine.InsertBeginLineMinIndent",
@@ -52,26 +46,6 @@
   "main": "./src/extension.js",
   "contributes": {
     "commands": [
-      {
-        "command": "BeginOfLine.Space2To4",
-        "title": "Begin Of Line | Space | Replace Indent Space 2 to 4"
-      },
-      {
-        "command": "BeginOfLine.Space4To2",
-        "title": "Begin Of Line | Space | Replace Indent Space 4 to 2"
-      },
-      {
-        "command": "BeginOfLine.Space4ToTab",
-        "title": "Begin Of Line | Space | Replace Indent Space 4 to Tab"
-      },
-      {
-        "command": "BeginOfLine.TabToSpace4",
-        "title": "Begin Of Line | Space | Replace Indent Tab to Space 4"
-      },
-      {
-        "command": "BeginOfLine.TrimBegin",
-        "title": "Begin Of Line | Space | Trim Begin (Delete Indent)"
-      },
       {
         "command": "BeginOfLine.InsertBeginLineAll",
         "title": "Begin Of Line | Input | Insert Begin Of Line | All Lines"

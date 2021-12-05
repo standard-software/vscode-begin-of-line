@@ -22,12 +22,6 @@ Enter the character string after selecting the command.
 
 Following commands are available:
 
-- `Begin Of Line | Space | Replace Indent Space 2 to 4`
-- `Begin Of Line | Space | Replace Indent Space 4 to 2`
-- `Begin Of Line | Space | Replace Indent Space 4 to Tab`
-- `Begin Of Line | Space | Replace Indent Tab to Space 4`
-- `Begin Of Line | Space | Trim Begin (Delete Indent)`
----
 - `Begin Of Line | Insert Begin Of Line | All Lines`
 - `Begin Of Line | Insert Begin Of Line | Text Lines`
 - `Begin Of Line | Insert Begin Of Line | Min Indent Lines`
@@ -46,12 +40,6 @@ Following commands are available:
 Or Select Function
 
 - `Begin Of Line | Select Function`
-  - `Space`
-    - `Space 2 To 4`
-    - `Space 4 To 2`
-    - `Space 4 To Tab`
-    - `Tab To Space 4`
-    - `Trim Begin`
   - `Input`
     - `Insert Begin Of Line`
       - `All Lines`
@@ -87,6 +75,17 @@ Released under the [MIT License][license].
 [license]: https://github.com/standard-software/vscode-begin-of-line/blob/master/LICENSE
 
 ## Version
+
+### 2.1.0
+2021/12/06(Mon)
+- refactoring
+- delete function (Transfer functionality to the following extensions)
+  - Space 2 To 4 / 4 to 2
+  - Space 4 To Tab / Tab To 4
+  - Trim Begin  
+  
+vscode-indent-space  
+https://marketplace.visualstudio.com/items?itemName=SatoshiYamamoto.vscode-indent-space
 
 ### 2.0.0
 2021/11/22(Mon)
