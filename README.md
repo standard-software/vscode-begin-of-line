@@ -41,6 +41,7 @@ Following commands are available:
 - Begin Of Line | Insert Min Indent | Text Lines
 - Begin Of Line | Delete Begin of Text
 
+- Begin Of Line | Select Cursor
 - Begin Of Line | Select Cursor | All Lines
 - Begin Of Line | Select Cursor | Text Lines
 - Begin Of Line | Select Cursor | Min Indent Lines
@@ -89,6 +90,10 @@ settings.json
 Released under the [MIT License][license].
 
 ## Version
+
+### 2.3.0
+2022/05/03 Tue
+- add rootcommand "Begin Of Line | Select Cursor"
 
 ### 2.2.0
 2022/05/03 Tue

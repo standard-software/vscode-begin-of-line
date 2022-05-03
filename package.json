@@ -2,7 +2,7 @@
   "name": "vscode-begin-of-line",
   "displayName": "Begin Of Line",
   "description": "Extension to insert, select, and convert at the beginning of a line.",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "icon": "vscode-begin-of-line_icon.png",
   "publisher": "SatoshiYamamoto",
   "author": {
@@ -36,6 +36,8 @@
     "onCommand:BeginOfLine.InsertMinIndentAll",
     "onCommand:BeginOfLine.InsertMinIndentText",
     "onCommand:BeginOfLine.DeleteBeginText",
+
+    "onCommand:BeginOfLine.SelectCursor",
     "onCommand:BeginOfLine.SelectBeginLineAll",
     "onCommand:BeginOfLine.SelectBeginLineText",
     "onCommand:BeginOfLine.SelectBeginLineMinIndent",
@@ -81,6 +83,10 @@
         "title": "Begin Of Line | Input | Delete Begin Of Text"
       },
       {
+        "command": "BeginOfLine.SelectCursor",
+        "title": "Begin Of Line | Select Cursor"
+      },
+      {
         "command": "BeginOfLine.SelectBeginLineAll",
         "title": "Begin Of Line | Select Cursor | All Lines"
       },
@@ -118,7 +124,7 @@
   },
   "scripts": {
     "lint": "eslint --fix ./src",
-    "pack": "vsce package && code --install-extension vscode-begin-of-line-2.2.0.vsix",
+    "pack": "vsce package && code --install-extension vscode-begin-of-line-2.3.0.vsix",
     "": ""
   },
   "devDependencies": {

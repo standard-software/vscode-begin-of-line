@@ -53,7 +53,6 @@ function activate(context) {
 
   registerCommand(`BeginOfLine.SelectFunction`, () => {
 
-    let select1Input, select1Select;
     commandQuickPick([
       [`Input`,         `${mark}`,           () => { commandQuickPick([
         [`Insert Begin Of Line`,  `${mark}`, () => { commandQuickPick([
@@ -72,14 +71,18 @@ function activate(context) {
         ], `Begin Of Line | Input | Insert Min Indent`); }],
         [`Delete Begin Of Text`,  ``,        () => { mainInput(`DeleteBeginText`); }],
       ], `Begin Of Line | Input`); }],
-      [`Select Cursor`, `${mark}`,           () => { commandQuickPick([
-        [`All Lines`,         ``,            () => { mainSelect(`SelectBeginLineAll`); }],
-        [`Text Lines`,        ``,            () => { mainSelect(`SelectBeginLineText`); }],
-        [`Min Indent Lines`,  ``,            () => { mainSelect(`SelectBeginLineMinIndent`); }],
-      ], `Begin Of Line | Select Cursor`); }],
+      [`Select Cursor`, `${mark}`,           () => { selectCursor(); }],
     ], `Begin Of Line | Select Function`);
 
   });
+
+  const selectCursor = () => {
+    commandQuickPick([
+      [`All Lines`,         ``,            () => { mainSelect(`SelectBeginLineAll`); }],
+      [`Text Lines`,        ``,            () => { mainSelect(`SelectBeginLineText`); }],
+      [`Min Indent Lines`,  ``,            () => { mainSelect(`SelectBeginLineMinIndent`); }],
+    ], `Begin Of Line | Select Cursor`);
+  };
 
   const mainInput = (commandName) => {
     const editor = vscode.window.activeTextEditor;
@@ -333,6 +336,10 @@ function activate(context) {
 
   registerCommand(`BeginOfLine.DeleteBeginText`, () => {
     mainInput(`DeleteBeginText`);
+  });
+
+  registerCommand(`BeginOfLine.SelectCursor`, () => {
+    selectCursor();
   });
 
   registerCommand(`BeginOfLine.SelectBeginLineAll`, () => {
