@@ -50,20 +50,20 @@ Or Select Function
 
 ```
 - Begin Of Line | Select Function
-  - Input
-    - Insert Begin Of Line
+  - Input ▸
+    - Insert Begin Of Line ▸
       - All Lines
       - Text Lines
       - Min Indent Lines
-    - Insert Begin Of Text
+    - Insert Begin Of Text ▸
       - All Lines
       - Text Lines
       - Min Indent Lines
-    - Insert Min Indent
+    - Insert Min Indent ▸
       - All Lines
       - Text Lines
     - Delete Begin of Text
-  - Select Cursor
+  - Select Cursor ▸
     - All Lines
     - Text Lines
     - Min Indent Lines
@@ -78,12 +78,11 @@ settings.json
 
 ```json
 {
-  "BeginOfLine.insertString": "// ",
+  "BeginOfLine.subMenuMark": ">>",
+  "BeginOfLine.insertString": "> ",
   :
 }
 ```
-Default value is "> "
-
 
 ## License
 
@@ -97,6 +96,10 @@ Released under the [MIT License][license].
 - Set title icon
 - Remove unnecessary npm packages
 - set vscode debug config
+- Sub Menu Mark "▸"
+  - Changeable in the settings
+  - show it in the description
+- refactoring
 
 ### 2.1.0
 2021/12/06(Mon)

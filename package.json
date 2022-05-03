@@ -23,9 +23,8 @@
     "Snippets"
   ],
   "keywords": [
-    "indent",
-    "reply mark",
-    "template"
+    "begin of line",
+    "reply mark"
   ],
   "activationEvents": [
     "onCommand:BeginOfLine.InsertBeginLineAll",
@@ -102,6 +101,10 @@
       "type": "object",
       "title": "Begin Of Line",
       "properties": {
+        "BeginOfLine.subMenuMark": {
+          "type": "string",
+          "default": "▸"
+        },
         "BeginOfLine.insertString": {
           "type": "string",
           "default": "> ",

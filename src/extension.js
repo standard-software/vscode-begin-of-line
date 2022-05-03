@@ -25,6 +25,20 @@ const getMinIndent = (editor) => {
   return minIndent;
 };
 
+const commandQuickPick = (commandsArray, placeHolder) => {
+  const commands = commandsArray.map(c => ({label:c[0], description:c[1], func:c[2]}));
+  vscode.window.showQuickPick(
+    commands.map(({label, description}) => ({label, description})),
+    {
+      canPickMany: false,
+      placeHolder
+    }
+  ).then((item) => {
+    if (!item) { return; }
+    commands.find(({label}) => label === item.label).func();
+  });
+};
+
 function activate(context) {
 
   const registerCommand = (commandName, func) => {
@@ -35,72 +49,35 @@ function activate(context) {
     );
   };
 
-  const commandQuickPick = (commandsArray, placeHolder) => {
-    const commands = commandsArray.map(c => ({label:c[0], description:c[1], func:c[2]}));
-    vscode.window.showQuickPick(
-      commands.map(({label, description}) => ({label, description})),
-      {
-        canPickMany: false,
-        placeHolder
-      }
-    ).then((item) => {
-      if (!item) { return; }
-      commands.find(({label}) => label === item.label).func();
-    });
-  };
+  const mark = vscode.workspace.getConfiguration(`BeginOfLine`).get(`subMenuMark`);
 
   registerCommand(`BeginOfLine.SelectFunction`, () => {
 
     let select1Input, select1Select;
     commandQuickPick([
-      [`Input`,         ``, () => { select1Input(); }],
-      [`Select Cursor`, ``, () => { select1Select(); }],
+      [`Input`,         `${mark}`,           () => { commandQuickPick([
+        [`Insert Begin Of Line`,  `${mark}`, () => { commandQuickPick([
+          [`All Lines`,         ``,          () => { mainInput(`InsertBeginLineAll`); }],
+          [`Text Lines`,        ``,          () => { mainInput(`InsertBeginLineText`); }],
+          [`Min Indent Lines`,  ``,          () => { mainInput(`InsertBeginLineMinIndent`); }],
+        ], `Begin Of Line | Input | Insert Begin Of Line`); }],
+        [`Insert Begin Of Text`,  `${mark}`, () => { commandQuickPick([
+          [`All Lines`,         ``,          () => { mainInput(`InsertBeginTextAll`); }],
+          [`Text Lines`,        ``,          () => { mainInput(`InsertBeginTextText`); }],
+          [`Min Indent Lines`,  ``,          () => { mainInput(`InsertBeginTextMinIndent`); }],
+        ], `Begin Of Line | Input | Insert Begin Of Text`); }],
+        [`Insert Min Indent`,     `${mark}`, () => { commandQuickPick([
+          [`All Lines`,         ``,          () => { mainInput(`InsertMinIndentAll`); }],
+          [`Text Lines`,        ``,          () => { mainInput(`InsertMinIndentText`); }],
+        ], `Begin Of Line | Input | Insert Min Indent`); }],
+        [`Delete Begin Of Text`,  ``,        () => { mainInput(`DeleteBeginText`); }],
+      ], `Begin Of Line | Input`); }],
+      [`Select Cursor`, `${mark}`,           () => { commandQuickPick([
+        [`All Lines`,         ``,            () => { mainSelect(`SelectBeginLineAll`); }],
+        [`Text Lines`,        ``,            () => { mainSelect(`SelectBeginLineText`); }],
+        [`Min Indent Lines`,  ``,            () => { mainSelect(`SelectBeginLineMinIndent`); }],
+      ], `Begin Of Line | Select Cursor`); }],
     ], `Begin Of Line | Select Function`);
-
-    select1Input = () => {
-      let select2InsertBeginOfLine, select2InsertBeginOfText, select2InsertMinIndent, select2DeleteBeginOfText;
-      commandQuickPick([
-        [`Insert Begin Of Line`,  ``, () => { select2InsertBeginOfLine(); }],
-        [`Insert Begin Of Text`,  ``, () => { select2InsertBeginOfText(); }],
-        [`Insert Min Indent`,     ``, () => { select2InsertMinIndent(); }],
-        [`Delete Begin Of Text`,  ``, () => { select2DeleteBeginOfText(); }],
-      ], `Begin Of Line | Input`);
-
-      select2InsertBeginOfLine = () => {
-        commandQuickPick([
-          [`All Lines`,         ``, () => { mainInput(`InsertBeginLineAll`); }],
-          [`Text Lines`,        ``, () => { mainInput(`InsertBeginLineText`); }],
-          [`Min Indent Lines`,  ``, () => { mainInput(`InsertBeginLineMinIndent`); }],
-        ], `Begin Of Line | Input | Insert Begin Of Line`);
-      };
-
-      select2InsertBeginOfText = () => {
-        commandQuickPick([
-          [`All Lines`,         ``, () => { mainInput(`InsertBeginTextAll`); }],
-          [`Text Lines`,        ``, () => { mainInput(`InsertBeginTextText`); }],
-          [`Min Indent Lines`,  ``, () => { mainInput(`InsertBeginTextMinIndent`); }],
-        ], `Begin Of Line | Input | Insert Begin Of Text`);
-      };
-
-      select2InsertMinIndent = () => {
-        commandQuickPick([
-          [`All Lines`,   ``, () => { mainInput(`InsertMinIndentAll`); }],
-          [`Text Lines`,  ``, () => { mainInput(`InsertMinIndentText`); }],
-        ], `Begin Of Line | Input | Insert Min Indent`);
-      };
-
-      select2DeleteBeginOfText = () => {
-        mainInput(`DeleteBeginText`);
-      };
-    };
-
-    select1Select = () => {
-      commandQuickPick([
-        [`All Lines`,         ``, () => { mainSelect(`SelectBeginLineAll`); }],
-        [`Text Lines`,        ``, () => { mainSelect(`SelectBeginLineText`); }],
-        [`Min Indent Lines`,  ``, () => { mainSelect(`SelectBeginLineMinIndent`); }],
-      ], `Begin Of Line | Select Cursor`);
-    };
 
   });
 
