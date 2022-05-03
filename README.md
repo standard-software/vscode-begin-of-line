@@ -96,6 +96,7 @@ Released under the [MIT License][license].
 - Update README
 - Set title icon
 - Remove unnecessary npm packages
+- set vscode debug config
 
 ### 2.1.0
 2021/12/06(Mon)
