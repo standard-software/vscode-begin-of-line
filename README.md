@@ -95,6 +95,7 @@ Released under the [MIT License][license].
 2022/05/03 Tue
 - Update README
 - Set title icon
+- Remove unnecessary npm packages
 
 ### 2.1.0
 2021/12/06(Mon)

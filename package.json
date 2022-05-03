@@ -2,7 +2,8 @@
   "name": "vscode-begin-of-line",
   "displayName": "Begin Of Line",
   "description": "Extension to insert, select, and convert at the beginning of a line.",
-  "version": "2.1.0",
+  "version": "2.2.0",
+  "icon": "vscode-begin-of-line_icon.png",
   "publisher": "SatoshiYamamoto",
   "author": {
     "name": "Satoshi Yamamoto",
@@ -36,11 +37,9 @@
     "onCommand:BeginOfLine.InsertMinIndentAll",
     "onCommand:BeginOfLine.InsertMinIndentText",
     "onCommand:BeginOfLine.DeleteBeginText",
-
     "onCommand:BeginOfLine.SelectBeginLineAll",
     "onCommand:BeginOfLine.SelectBeginLineText",
     "onCommand:BeginOfLine.SelectBeginLineMinIndent",
-
     "onCommand:BeginOfLine.SelectFunction"
   ],
   "main": "./src/extension.js",
@@ -115,19 +114,12 @@
     }
   },
   "scripts": {
-    "lint": "eslint .",
-    "pretest": "npm run lint",
-    "test": "node ./test/runTest.js"
+    "lint": "eslint --fix ./src",
+    "pack": "vsce package && code --install-extension vscode-begin-of-line-2.2.0.vsix",
+    "": ""
   },
   "devDependencies": {
-    "@types/glob": "^7.1.4",
-    "@types/mocha": "^9.0.0",
-    "@types/node": "14.x",
-    "@types/vscode": "^1.60.0",
-    "@vscode/test-electron": "^1.6.2",
     "eslint": "^7.32.0",
-    "glob": "^7.1.7",
-    "mocha": "^9.1.1",
-    "typescript": "^4.4.3"
+    "vsce": "^2.7.0"
   }
 }
