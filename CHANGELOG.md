@@ -4,6 +4,7 @@
 - update README
 - add CHANGELOG
 - fix README Badge
+- Deprecated this extension.
 
 ## [2.3.0] - 2022/05/03 Tue
 - add rootcommand "Begin Of Line | Select Cursor"

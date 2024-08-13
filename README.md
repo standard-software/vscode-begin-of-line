@@ -1,4 +1,4 @@
-# VSCode extension - Begin Of Line
+# Begin Of Line (deprecated)
 
 [![](https://vsmarketplacebadges.dev/version-short/SatoshiYamamoto.vscode-begin-of-line.png)](https://marketplace.visualstudio.com/items?itemName=SatoshiYamamoto.vscode-begin-of-line)
 [![](https://vsmarketplacebadges.dev/installs-short/SatoshiYamamoto.vscode-begin-of-line.png)](https://marketplace.visualstudio.com/items?itemName=SatoshiYamamoto.vscode-begin-of-line)
@@ -12,6 +12,14 @@ This extension has the following functions
 
 ## Attention Information
 
+This extension is deprecated.
+
+The Insert and Delete functions exist in this extension. However, we found that you can insert or delete the string after moving the cursor.
+
+So I created "Select Line Cursor" as a simple function only." Go to "Select Line Cursor".
+
+Select Line Cursor - Visual Studio Marketplace
+https://marketplace.visualstudio.com/items?itemName=SatoshiYamamoto.vscode-select-line-cursor
 
 ## Install
 

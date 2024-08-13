@@ -1,6 +1,6 @@
 {
   "name": "vscode-begin-of-line",
-  "displayName": "Begin Of Line",
+  "displayName": "Begin Of Line (deprecated)",
   "description": "Extension to insert, select, and convert at the beginning of a line.",
   "version": "2.3.0",
   "icon": "vscode-begin-of-line_icon.png",
@@ -26,23 +26,7 @@
     "begin of line",
     "reply mark"
   ],
-  "activationEvents": [
-    "onCommand:BeginOfLine.InsertBeginLineAll",
-    "onCommand:BeginOfLine.InsertBeginLineText",
-    "onCommand:BeginOfLine.InsertBeginLineMinIndent",
-    "onCommand:BeginOfLine.InsertBeginTextAll",
-    "onCommand:BeginOfLine.InsertBeginTextText",
-    "onCommand:BeginOfLine.InsertBeginTextMinIndent",
-    "onCommand:BeginOfLine.InsertMinIndentAll",
-    "onCommand:BeginOfLine.InsertMinIndentText",
-    "onCommand:BeginOfLine.DeleteBeginText",
-
-    "onCommand:BeginOfLine.SelectCursor",
-    "onCommand:BeginOfLine.SelectBeginLineAll",
-    "onCommand:BeginOfLine.SelectBeginLineText",
-    "onCommand:BeginOfLine.SelectBeginLineMinIndent",
-    "onCommand:BeginOfLine.SelectFunction"
-  ],
+  "activationEvents": [],
   "main": "./src/extension.js",
   "contributes": {
     "commands": [
