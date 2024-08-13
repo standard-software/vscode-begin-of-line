@@ -2,7 +2,7 @@
   "name": "vscode-begin-of-line",
   "displayName": "Begin Of Line (deprecated)",
   "description": "Extension to insert, select, and convert at the beginning of a line.",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "icon": "vscode-begin-of-line_icon.png",
   "publisher": "SatoshiYamamoto",
   "author": {
@@ -108,7 +108,7 @@
   },
   "scripts": {
     "lint": "eslint --fix ./src",
-    "pack": "vsce package && code --install-extension vscode-begin-of-line-2.3.0.vsix",
+    "pack": "vsce package && code --install-extension vscode-begin-of-line-2.4.0.vsix",
     "": ""
   },
   "devDependencies": {
